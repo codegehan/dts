@@ -75,7 +75,6 @@
     <nav class="navbar navbar-light bg-light w-100" style="position: fixed; background: linear-gradient(to right, #ff9966, #ff5e62);">
         <div class="ps-3 pt-2 d-flex">
             <h5 style="font-size: 1.5rem; text-shadow: 2px 2px 4px #000000; color: #fff;">VPRDEgital Record Tracking and Archiving Management System</h5>
-            <!-- <button class="btn btn-outline-danger me-4" onclick="ShowLoginContainer()" style="position:absolute;right:0;margin-top:-5px;">Login</button> -->
         </div>
     </nav>
     <div class="wrapper">
@@ -83,7 +82,7 @@
         <form id="loginForm" method="POST">
             <div class="bg-light w-25 p-3 login-container rounded shadow" id="loginContainer">
                 <div class="my-3 text-center">
-                    <h5 style="text-shadow: 2px 2px 4px #ccc;color:#000000">VPRDE Authorization</h5>
+                    <h5 style="text-shadow: 2px 2px 4px #ccc;color:#000000">VPRDE Auth</h5>
                 </div>
                 <div class="form-floating mb-2">
                     <input type="email" class="form-control text-uppercase" placeholder="Enter email" id="email" name="email" autocomplete="off" required></input>
