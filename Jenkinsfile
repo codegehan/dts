@@ -12,10 +12,10 @@ pipeline {
                     def backupDir = '/usr/share/nginx/html/dts_backup'
                     
                     // Create a backup of the existing content
-                    sh '''
-                    echo $MY_ROOT_CREDENTIALS_PSW | sudo -S mkdir -p ${backupDir}
-                    echo $MY_ROOT_CREDENTIALS_PSW | sudo -S cp -r ${targetDir}/* ${backupDir}/
-                    '''
+                    sh """
+                    sudo mkdir -p ${backupDir}
+                    sudo cp -r ${targetDir}/* ${backupDir}/
+                    """
                 }
             }
         }      
