@@ -82,7 +82,7 @@
         <form id="loginForm" method="POST">
             <div class="bg-light w-25 p-3 login-container rounded shadow" id="loginContainer">
                 <div class="my-3 text-center">
-                    <h5 style="text-shadow: 2px 2px 4px #ccc;color:#000000">VPRDE Auth</h5>
+                    <h5 style="text-shadow: 2px 2px 4px #ccc;color:#000000">VPRDE Authorization</h5>
                 </div>
                 <div class="form-floating mb-2">
                     <input type="email" class="form-control text-uppercase" placeholder="Enter email" id="email" name="email" autocomplete="off" required></input>
