@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    environment {
+        MY_ROOT_CREDENTIALS = credentials('myrootcredentials')  // ID of your credentials
+    }
+    stages {
+        stage('Get Source Code') {
+            steps {
+                // Check out the code from your GitHub repository
+                git url: 'https://github.com/codegehan/dts.git', branch: 'main'
+            }
+        }
+        stage('Restart Server') {
+            steps {
+                sh '''
+                echo $MY_ROOT_CREDENTIALS_PSW | sudo -S systemctl restart nginx
+                '''
+            }
+        }
+    }
+}
