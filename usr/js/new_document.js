@@ -70,7 +70,7 @@ function SubmitNewDocument(){
             let parsedData = JSON.parse(jsonData);
             parsedData.filename = fileNameToSave
             jsonData = JSON.stringify(parsedData);
-	        SaveFile(selectedFile, transC)
+	        SaveFile(selectedFile, transC+".pdf")
             .then(function(isFileSaved) {
                 if (isFileSaved) {
                     Tools.InsertRecord('controller/inserting.php', 'newdocument', jsonData, ResetForm());
