@@ -68,9 +68,10 @@ function SubmitNewDocument(){
             var transC = $('#transactionCode').val();
             let jsonData = Tools.GetInput('newDocumentForm');
             let parsedData = JSON.parse(jsonData);
+            let fileNameToSave = transC + ".pdf";
             parsedData.filename = fileNameToSave
             jsonData = JSON.stringify(parsedData);
-	        SaveFile(selectedFile, transC+".pdf")
+	        SaveFile(selectedFile, fileNameToSave)
             .then(function(isFileSaved) {
                 if (isFileSaved) {
                     Tools.InsertRecord('controller/inserting.php', 'newdocument', jsonData, ResetForm());
