@@ -68,7 +68,7 @@ function SubmitNewDocument(){
             var transC = $('#transactionCode').val();
             let jsonData = Tools.GetInput('newDocumentForm');
             let parsedData = JSON.parse(jsonData);
-            let fileNameToSave = transC + "-" + selectedFile.name;
+            let fileNameToSave = transC+"-"+selectedFile.name;
             parsedData.filename = fileNameToSave
             jsonData = JSON.stringify(parsedData);
 	        SaveFile(selectedFile, fileNameToSave)
