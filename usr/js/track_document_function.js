@@ -4,7 +4,7 @@ function TrackTransaction(){
     var jsonData = JSON.stringify({
         transactioncode: searchKey
     });
-    console.log(jsonData)
+    // console.log(jsonData)
     // var result = Tools.RecordData('../controller/fetching.php', 'track_document', jsonData);
     // console.log(result)
     $.ajax({
@@ -121,6 +121,48 @@ function TrackTransaction(){
                     resultBody.innerHTML = "";
                 }, 2500);
             }
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr, status, error);
+        }
+    });
+}
+
+
+function ValidateSignature(){
+    var signatureCode = $('#signatureCode').val();
+    var jsonData = JSON.stringify({
+        signcode: signatureCode
+    });
+    $.ajax({
+        url: 'controller/fetching.php',
+        type: 'POST',
+        data: {
+            spname: 'signcheck',
+            jsonData: jsonData,
+        },
+        success: function(response) { 
+            var responseData = JSON.parse(response);
+            var resultBody = document.getElementById('signrecord');
+            let htmlContent = '';
+
+            let fontColor = responseData.statuscode === 0 ? "red" : "green";
+            let iconStyle = responseData.statuscode === 0 ? "lni-cross-circle" : "lni-checkmark-circle";
+            let statusText = responseData.result;
+
+            htmlContent = `
+                <div class="mb-5">
+                    <div style="font-size:5rem;color:${fontColor}" class="d-flex justify-content-center align-items-center">
+                        <i class="lni ${iconStyle}"></i>
+                        <span class="ms-3" style="font-size:2rem;">Signature record: <u>${signatureCode}</u> is <u>${statusText.toUpperCase()}</u></span> 
+                    </div>
+                </div>
+            `;
+            $('#signatureCode').val("");
+            resultBody.innerHTML = htmlContent;
+            setTimeout(function() {
+                resultBody.innerHTML = "";
+            }, 5000);
         },
         error: function(xhr, status, error) {
             console.error(xhr, status, error);

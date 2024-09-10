@@ -88,14 +88,25 @@ if(!Authorize::isAccountSecured()) {
     <div class="row bg-light shadow border border-right-0 border-bottom-0">
         <div class="col-md-6">
             <div class="form-group my-4">
-                <div class="d-flex">
-                    <input type="text" id="searchKey" placeholder="Search transaction code here ..." class="form-control">
-                    <button class="btn btn-sm btn-primary ms-3" onclick="TrackTransaction()">Search</button>
-                </div>
+                    <div class="d-flex align-items-center">
+                        <input type="text" id="searchKey" placeholder="Search transaction code here ..." class="form-control">
+                        <button class="btn btn-sm btn-primary ms-3" onclick="TrackTransaction()">Search</button>
+                    </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group my-4">
+                    <div class="d-flex align-items-center">
+                        <input type="text" id="signatureCode" placeholder="Validate signature code..." class="form-control">
+                        <button class="btn btn-sm btn-secondary ms-3" onclick="ValidateSignature()">Validate</button>
+                    </div>
             </div>
         </div>
         <div class="col-md-12" id="track_result"></div>
         <div class="pb-5"></div>
+
+        <div id="signrecord" class="text-center"></div>
     </div>
 </div>
 <script src="../library/js/ccs_workers.js"></script>

@@ -1,4 +1,12 @@
 var selectedFile;
+function sweetAlert(title, icon){
+    Swal.fire({
+        title: title,
+        showConfirmButton: false,
+        timer: 2000,
+        icon: icon
+    });
+}
 function AttachFile(){
     document.getElementById('proposalAttachedFile').click();
 }
@@ -11,25 +19,29 @@ function ProposalAttachedFile(){
     });
 }
 function SaveFile(file, transactioncode){
-    document.getElementById('loader-upload').hidden = false;
-    var formData = new FormData();
-    formData.append('file', file);
-    formData.append('transactioncode', transactioncode);
-    $.ajax({
-        url: 'controller/uploadFile.php',
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(response) {
-            console.log(response);
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr, status, error)
-            
-        }
+    return new Promise((resolve, reject) =>{
+        var formData = new FormData();
+        formData.append('file', file);
+        formData.append('transactioncode', transactioncode);
+        document.getElementById('loader-upload').hidden = false;
+        $.ajax({
+            url: 'controller/uploadFile.php',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                console.log(response);
+                resolve(true);
+                document.getElementById('loader-upload').hidden = true;
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr, status, error)
+                reject(false);
+                document.getElementById('loader-upload').hidden = true;
+            }
+        });
     });
-    document.getElementById('loader-upload').hidden = true;
 }
 function ClearAttachment(){
     document.getElementById('proposalAttachedFile').value = '';
@@ -51,14 +63,25 @@ function SubmitNewDocument(){
     icon: 'question',
     }).then((result) => {
         if (result.isConfirmed) {
+            $('#addNewDocumentModal').modal('hide');
+            console.log("Selected File", selectedFile)
             var transC = $('#transactionCode').val();
             var jsonData = Tools.GetInput('newDocumentForm');
-            console.log(jsonData);
-            Tools.InsertRecord('controller/inserting.php', 'newdocument', jsonData, ResetForm());
-	        SaveFile(selectedFile, transC);
-            ClearAttachment();
-	        DocumentList();
-            $('#addNewDocumentModal').modal('hide');
+	        SaveFile(selectedFile, transC)
+            .then(function(isFileSaved) {
+                if (isFileSaved) {
+                    Tools.InsertRecord('controller/inserting.php', 'newdocument', jsonData, ResetForm());
+                } else {
+                    sweetAlert("Failed to upload file", "error");
+                }
+            })
+            .catch(function() {
+                sweetAlert("Failed to upload file", "error");
+            })
+            .finally(function(){
+                ClearAttachment();
+                DocumentList();
+            })  
         } 
     });
 }

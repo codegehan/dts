@@ -2,9 +2,15 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1); 
 session_start();
-// if(!defined('base_uri')) { define('base_uri', 'http://26.69.213.34/dts/');}
-if(!defined('base_uri')) { define('base_uri', 'https://ccs-creatives.ddns.net/dts/');}
-// if(!defined('base_uri')) { define('base_uri', 'http://localhost:8080/dts/');}
+require dirname(__DIR__) . '/vendor/autoload.php';
+use Dotenv\Dotenv;
+// Create a new Dotenv instance and load the .env file
+$dotenv = Dotenv::createImmutable(dirname(__DIR__)); // Specify the directory containing .env
+$dotenv->load();
+$baseUri = $_ENV["BASE_URI"];
+$version = $_ENV["VERSION"];
+// if(!defined('base_uri')) { define('base_uri', 'https://ccs-creatives.ddns.net/dts/');}
+if(!defined('base_uri')) { define('base_uri', $baseUri);}
 include("../db/conf.php"); 
 include('../library/php/opt.php');
 include("../library/php/authorizations.php");
@@ -131,6 +137,9 @@ if(!isset($_SESSION['userdetails'])){
                         <i class="lni lni-exit"></i>
                         <span>Logout<span style="font-size:6px;" id="outgoingCount"></span>
                     </a>
+                </li>
+                <li class="sidebar-item" style="position:absolute;bottom:0;margin-left:12px;">
+                    <span style="font-size:14px;color:#f6d3bd;">DTS Version <?=$version?></span>
                 </li>
             </ul>
         </aside>
