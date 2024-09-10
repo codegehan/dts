@@ -139,7 +139,9 @@ if(!isset($_SESSION['userdetails'])){
                     </a>
                 </li>
                 <li class="sidebar-item" style="position:absolute;bottom:0;margin-left:12px;">
-                    <span style="font-size:14px;color:#f6d3bd;">DTS Version <?=$version?></span>
+                    <!-- VERSION -->
+                    <span style="font-size:14px;color:#f6d3bd;">DTS Version 1.1</span>
+                    <!-- VERSION -->
                 </li>
             </ul>
         </aside>

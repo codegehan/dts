@@ -18,11 +18,11 @@ function ProposalAttachedFile(){
         }
     });
 }
-function SaveFile(file, transactioncode){
+function SaveFile(file, fileNameToSave){
     return new Promise((resolve, reject) =>{
         var formData = new FormData();
         formData.append('file', file);
-        formData.append('transactioncode', transactioncode);
+        formData.append('fileNameToSave', fileNameToSave);
         document.getElementById('loader-upload').hidden = false;
         $.ajax({
             url: 'controller/uploadFile.php',
@@ -64,10 +64,14 @@ function SubmitNewDocument(){
     }).then((result) => {
         if (result.isConfirmed) {
             $('#addNewDocumentModal').modal('hide');
-            console.log("Selected File", selectedFile)
+            console.log("Selected File", selectedFile.name)
             var transC = $('#transactionCode').val();
-            var jsonData = Tools.GetInput('newDocumentForm');
-	        SaveFile(selectedFile, transC)
+            let jsonData = Tools.GetInput('newDocumentForm');
+            let parsedData = JSON.parse(jsonData);
+            let fileNameToSave = transC + "-" + selectedFile.name;
+            parsedData.filename = fileNameToSave
+            jsonData = JSON.stringify(parsedData);
+	        SaveFile(selectedFile, fileNameToSave)
             .then(function(isFileSaved) {
                 if (isFileSaved) {
                     Tools.InsertRecord('controller/inserting.php', 'newdocument', jsonData, ResetForm());

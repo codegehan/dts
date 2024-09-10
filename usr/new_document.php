@@ -53,7 +53,7 @@
             <a id="fileNameLabel" class="link-opacity-100" style="font-size: 12px;"></a>
         </div>
         <div class="modal-footer">
-            <input type="file" id="proposalAttachedFile" name="fileName" accept="application/pdf" onclick="ProposalAttachedFile()" style="display: none;">
+            <input type="file" id="proposalAttachedFile" accept="application/pdf" onclick="ProposalAttachedFile()" style="display: none;">
             <button type="button" onclick="AttachFile()" class="btn btn-secondary btn-sm">Attach a File</button>
             <button type="button" onclick="ClearAttachment()" class="btn btn-secondary btn-sm">Clear File</button>
             <button type="button" class="btn btn-primary btn-sm" onclick="ResetForm()">Reset</button>
