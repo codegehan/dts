@@ -46,22 +46,18 @@ function TrackTransaction(){
                                 <span>Requesting Officer: ${requestingofficer}</span>
                             </div>
                             <div class="col-md-4">
-                                <span>Office: -</span>
+                                <span>Current Status: ${status}</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4">Current Status: ${status}</span>
+                            <div class="col-md-4">
+                                <span>Office Involved: ${officeinvolved}</span>
+                            </div>  
+                            <div class="col-md-4">
+                                <span>Purpose: ${purpose}</span>
                             </div>
                             <div class="col-md-4">
                                 <span>Urgency Level: ${urgency}</span>
-                            </div>
-                            <div class="col-md-4">
-                                <span>Office Involved: ${officeinvolved}</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <span>Purpose: ${purpose}</span>
                             </div>
                         </div>
                         <div class="row">

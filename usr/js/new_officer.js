@@ -8,6 +8,9 @@ function SelectedOffice()
     $('#username').val(office + '-' + randomNumbers);
     $('#usernamedisplay').val(office + '-' + randomNumbers);
 }
+function ResetForm(){
+    $('#addNewOfficerForm')[0].reset();
+}
 function GetEmployees(){
     Tools.FetchRecord('controller/viewing.php', 'getemployee', '123', '#employeeBody', '#employeeTable');
 }
@@ -37,13 +40,13 @@ function SaveOfficerConfirmation(){
                 console.log('File uploaded successfully:', response);
                 Tools.InsertRecord('controller/inserting.php', 'newemployee', jsonData);
                 signatureFile.values = '';
-                ResetForm();
-                GetEmployees();
             },
             error: function(xhr, status, error) {
                 console.error('File upload error:', xhr.responseText);
             }
         });
+        ResetForm();
+        GetEmployees();
     }   
     });
 }

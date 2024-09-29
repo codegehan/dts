@@ -22,5 +22,23 @@ Class Option{
         }
         $stmt->close();
     }
+
+    public static function PopulateBroadcast($spname, $value, $description){
+        $host = $_ENV['DB_HOST'];
+        $port = $_ENV['DB_PORT'];
+        $user = $_ENV['DB_USER'];
+        $pass = $_ENV['DB_PASS'];
+        $dbname = $_ENV['DB_NAME'];
+
+        $connection = mysqli_connect($host, $user, $pass, $dbname,$port);
+        $sql = "call $spname()";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        while($row = $res->fetch_assoc()) {
+            echo "<label><input type='checkbox' value='" . $row[$value] . "' onchange='updateSelection()'> " . strtoupper($row[$description]) . "</label>";
+        }
+        $stmt->close();
+    }
 }
 ?>

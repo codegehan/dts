@@ -36,7 +36,6 @@
                 if (rowDataElement) {
                     documentNo = rowDataElement.querySelector('td:first-child').innerText;
                     if(action.toUpperCase() === "VIEW"){ 
-                        console.log("Viewing Document: ", documentNo)
                         $('#exampleModal').find('#t-code').val(documentNo);
                         $('#exampleModal').modal('show');
                     }
