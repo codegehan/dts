@@ -11,7 +11,7 @@
  Target Server Version : 80035 (8.0.35)
  File Encoding         : 65001
 
- Date: 04/09/2024 10:59:04
+ Date: 30/09/2024 08:46:35
 */
 
 SET NAMES utf8mb4;
@@ -29,16 +29,6 @@ CREATE TABLE `campus`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of campus
--- ----------------------------
-INSERT INTO `campus` VALUES ('dapitan campus - main', 'dap', 1);
-INSERT INTO `campus` VALUES ('dipolog campus', 'dip', 2);
-INSERT INTO `campus` VALUES ('katipunan campus', 'katp', 3);
-INSERT INTO `campus` VALUES ('tampilisan campus', 'tamp', 4);
-INSERT INTO `campus` VALUES ('siocon campus', 'sioc', 5);
-INSERT INTO `campus` VALUES ('sibuco-ext campus', 'sibc', 6);
-
--- ----------------------------
 -- Table structure for department
 -- ----------------------------
 DROP TABLE IF EXISTS `department`;
@@ -50,52 +40,6 @@ CREATE TABLE `department`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 85 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of department
--- ----------------------------
-INSERT INTO `department` VALUES (43, 'CAS', 'CAS');
-INSERT INTO `department` VALUES (44, 'CBA', 'CBA');
-INSERT INTO `department` VALUES (45, 'CNAHS', 'CNAHS');
-INSERT INTO `department` VALUES (46, 'COE', 'COE');
-INSERT INTO `department` VALUES (47, 'CME', 'CME');
-INSERT INTO `department` VALUES (48, 'GRADUATE STUDIES', 'GRAD');
-INSERT INTO `department` VALUES (49, 'CJD', 'CJD');
-INSERT INTO `department` VALUES (50, 'CCJE', 'CCJE');
-INSERT INTO `department` VALUES (51, 'ADMINISTRATION', 'ADMI');
-INSERT INTO `department` VALUES (52, 'RESEARCH', 'RESE');
-INSERT INTO `department` VALUES (53, 'EXTENSION', 'EXTE');
-INSERT INTO `department` VALUES (54, 'SECURITY', 'SECU');
-INSERT INTO `department` VALUES (55, 'GSO', 'GSO');
-INSERT INTO `department` VALUES (56, 'UDRRMO', 'UDRR');
-INSERT INTO `department` VALUES (57, 'MISO', 'MISO');
-INSERT INTO `department` VALUES (58, 'QAC', 'QAC');
-INSERT INTO `department` VALUES (59, 'IMD', 'IMD');
-INSERT INTO `department` VALUES (60, 'COMPUTER LABORATORY', 'COMP');
-INSERT INTO `department` VALUES (61, 'FAB LABORATORY', 'FAB');
-INSERT INTO `department` VALUES (62, 'NATSCI LABORATORY', 'NATS');
-INSERT INTO `department` VALUES (63, 'GENSCI LABORATORY', 'GENS');
-INSERT INTO `department` VALUES (64, 'CME LABORATORY', 'CME');
-INSERT INTO `department` VALUES (65, 'UNIVERSITY LIBRARY', 'ULIB');
-INSERT INTO `department` VALUES (66, 'CNAHS LABORATORY', 'CNLAB');
-INSERT INTO `department` VALUES (67, 'JUNIOR HIGH SCHOOL', 'JUNI');
-INSERT INTO `department` VALUES (68, 'GUIDANCE', 'GDS');
-INSERT INTO `department` VALUES (69, 'FLS', 'FLS');
-INSERT INTO `department` VALUES (70, 'i18N', 'i18N');
-INSERT INTO `department` VALUES (71, 'RECORD OFFICE', 'RECO');
-INSERT INTO `department` VALUES (72, 'DSAS', 'DSAS');
-INSERT INTO `department` VALUES (73, 'KTTO', 'KTTO');
-INSERT INTO `department` VALUES (74, 'LMS', 'LMS');
-INSERT INTO `department` VALUES (75, 'PESA', 'PESA');
-INSERT INTO `department` VALUES (76, 'GAD', 'GAD');
-INSERT INTO `department` VALUES (77, 'TESDA', 'TESD');
-INSERT INTO `department` VALUES (78, 'CAO', 'CAO');
-INSERT INTO `department` VALUES (79, 'CCS', 'CCS');
-INSERT INTO `department` VALUES (80, 'CBA-SSG-SMM', 'CBASGSM');
-INSERT INTO `department` VALUES (81, 'LUNDAYAN', 'LUN');
-INSERT INTO `department` VALUES (82, 'University Registrar', 'UREG');
-INSERT INTO `department` VALUES (83, 'OFFICE OF THE PRESIDENT', 'OOTP');
-INSERT INTO `department` VALUES (84, 'CULTURAL AND SPORTS', 'CULT');
-
--- ----------------------------
 -- Table structure for documentitem
 -- ----------------------------
 DROP TABLE IF EXISTS `documentitem`;
@@ -105,6 +49,7 @@ CREATE TABLE `documentitem`  (
   `officer` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `docdescription` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `docpurpose` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `communicationtype` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `officeinvolved` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `urgencylevel` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `status` tinyint NULL DEFAULT 5,
@@ -114,10 +59,6 @@ CREATE TABLE `documentitem`  (
   `filename` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`doc_no`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of documentitem
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for documentitemdetails
@@ -134,11 +75,7 @@ CREATE TABLE `documentitemdetails`  (
   `trans_code` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `islatest` tinyint NULL DEFAULT 1,
   PRIMARY KEY (`no`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of documentitemdetails
--- ----------------------------
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for employee
@@ -164,12 +101,7 @@ CREATE TABLE `employee`  (
   `verified` tinyint NULL DEFAULT NULL,
   `verifieddate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`userno`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of employee
--- ----------------------------
-INSERT INTO `employee` VALUES (1, 'CAS-0871-01', 'admininstrator', 'administrator', 'admin@admin.com', '09876543212', '2024-04-10 09:39:44', 'admin', NULL, NULL, NULL, NULL, '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1, 'dapitan campus - main', NULL, NULL, NULL);
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for signrecord
@@ -183,13 +115,6 @@ CREATE TABLE `signrecord`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of signrecord
--- ----------------------------
-INSERT INTO `signrecord` VALUES (1, '090324052026', NULL);
-INSERT INTO `signrecord` VALUES (2, '090324052958', NULL);
-INSERT INTO `signrecord` VALUES (3, '090324053006', '2024-09-03 11:30:47');
-
--- ----------------------------
 -- Table structure for statusdefinition
 -- ----------------------------
 DROP TABLE IF EXISTS `statusdefinition`;
@@ -200,18 +125,6 @@ CREATE TABLE `statusdefinition`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of statusdefinition
--- ----------------------------
-INSERT INTO `statusdefinition` VALUES ('declined', 0);
-INSERT INTO `statusdefinition` VALUES ('approved', 1);
-INSERT INTO `statusdefinition` VALUES ('in-progress', 2);
-INSERT INTO `statusdefinition` VALUES ('on-hold', 3);
-INSERT INTO `statusdefinition` VALUES ('waiting', 4);
-INSERT INTO `statusdefinition` VALUES ('pending', 5);
-INSERT INTO `statusdefinition` VALUES ('returned', 6);
-INSERT INTO `statusdefinition` VALUES ('complete', 10);
-
--- ----------------------------
 -- Table structure for urgencydefinition
 -- ----------------------------
 DROP TABLE IF EXISTS `urgencydefinition`;
@@ -220,14 +133,6 @@ CREATE TABLE `urgencydefinition`  (
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`code`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of urgencydefinition
--- ----------------------------
-INSERT INTO `urgencydefinition` VALUES (1, 'urgent-important');
-INSERT INTO `urgencydefinition` VALUES (2, 'urgent - not important');
-INSERT INTO `urgencydefinition` VALUES (3, 'not urgent - important');
-INSERT INTO `urgencydefinition` VALUES (4, 'not urgent - not important');
 
 -- ----------------------------
 -- Procedure structure for accountinfo
@@ -336,6 +241,11 @@ BEGIN
     END IF;
     
     IF EXISTS(SELECT 1 FROM documentitem WHERE transactioncode = _transactioncode) THEN
+				SET @documentCommunicationType = (SELECT communicationtype FROM documentitem WHERE transactioncode = _transactioncode);		
+				IF LOWER(@documentCommunicationType) = "broadcast" THEN
+					SET _approvedstatus = 10;
+				END IF;
+				
         SET @sql = CONCAT('UPDATE documentitem 
             SET status = ', _approvedstatus, ', 
                 approvedby = ''', _approvedby, ''', 
@@ -346,10 +256,10 @@ BEGIN
         DEALLOCATE PREPARE stmt;
 				
 				SET @sql = CONCAT('UPDATE documentitemdetails SET islatest = 0 
-														WHERE trans_code = ''',_transactioncode,'''');
+														WHERE trans_code = ''',_transactioncode,''' AND forwardedto = ''',_approvingoffice,'''');
 				PREPARE stmt FROM @sql;
 				EXECUTE stmt;
-				DEALLOCATE PREPARE stmt;									
+				DEALLOCATE PREPARE stmt;
 				
 				SET @sql = CONCAT('INSERT INTO documentitemdetails (forwardedto, status,
 														enteredby,entereddate, trans_code, islatest) 
@@ -405,7 +315,7 @@ BEGIN
 	FROM documentitemdetails 
 	LEFT JOIN documentitem ON documentitemdetails.trans_code = documentitem.transactioncode
 	WHERE forwardedto = _officeAssign
-	AND documentitem.`status` = 5 AND documentitemdetails.islatest = 1;
+	AND documentitemdetails.`status` = 5 AND documentitemdetails.islatest = 1;
 	
 	SELECT COUNT(*) INTO @received
 	FROM documentitemdetails
@@ -536,7 +446,7 @@ BEGIN
 	LEFT JOIN documentitem di ON dd.`trans_code` = di.`transactioncode`
 	LEFT JOIN employee emp ON di.officer = emp.usercode
 	LEFT JOIN statusdefinition stat ON di.`status` = stat.`code`
-	WHERE di.`status` = 5 AND dd.forwardedto = _office AND dd.islatest = 1
+	WHERE dd.`status` = 5 AND dd.forwardedto = _office AND dd.islatest = 1
 	ORDER BY di.doc_no;
 END
 ;;
@@ -684,7 +594,7 @@ DROP PROCEDURE IF EXISTS `getoffice`;
 delimiter ;;
 CREATE PROCEDURE `getoffice`()
 BEGIN
-	SELECT idno,`desc`,`code` FROM department;
+	SELECT idno,`desc`,`code` FROM department ORDER BY `code`;
 END
 ;;
 delimiter ;
@@ -832,9 +742,11 @@ BEGIN
 	DECLARE _officer CHAR(30) DEFAULT getvalue(jsonData, '$.actionOfficer');
 	DECLARE _docdesc LONGTEXT DEFAULT getvalue(jsonData, '$.documentDescription');
 	DECLARE _docpurpose LONGTEXT DEFAULT getvalue(jsonData, '$.documentPurpose');
+	DECLARE _communicationType LONGTEXT DEFAULT getvalue(jsonData, '$.communicationType');
 	DECLARE _officeinvolved VARCHAR(50) DEFAULT getvalue(jsonData, '$.officeInvolved');
 	DECLARE _forwardedto VARCHAR(50) DEFAULT getvalue(jsonData, '$.forwardedTo');
 	DECLARE _urgency VARCHAR(100) DEFAULT getvalue(jsonData, '$.urgencyLevel');
+	DECLARE _fileName VARCHAR(300) DEFAULT getvalue(jsonData, '$.filename');
 	DECLARE _dateadded DATETIME DEFAULT CURRENT_TIMESTAMP();
 	
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -846,9 +758,79 @@ BEGIN
 	END;
 	
 	START TRANSACTION;
-	SET @sql = CONCAT('INSERT INTO documentitem (transactioncode,officer,docdescription,docpurpose,officeinvolved,urgencylevel,dateadded)
+	SET @sql = CONCAT('INSERT INTO documentitem (transactioncode, officer, docdescription, docpurpose,
+											communicationType, officeinvolved, urgencylevel, dateadded, filename)
 											VALUES (''',_transactioncode,''',''',_officer,''',''',_docdesc,''',''',_docpurpose,''',
-											''',_officeinvolved,''',''',_urgency,''',''',_dateadded,''')');
+											''',_communicationType,''',''',_officeinvolved,''',''',_urgency,''',''',_dateadded,''',
+											''',_fileName,''')');
+	PREPARE stmt FROM @sql;
+	EXECUTE stmt;
+	DEALLOCATE PREPARE stmt;
+	
+	IF LOWER(_communicationType) = "direct" THEN
+		SET @sql = CONCAT('INSERT INTO documentitemdetails(trans_code,forwardedto,note,enteredby,entereddate) 
+												VALUES (''',_transactioncode,''',''',_forwardedto,''',''-'',''',_officer,''',''',_dateadded,''')');
+		PREPARE stmt FROM @sql;
+		EXECUTE stmt;
+		DEALLOCATE PREPARE stmt;
+	ELSEIF LOWER(_communicationType) = "broadcast" THEN
+		SET @index = 0;
+		UPDATE documentitem SET `status` = 10 WHERE transactioncode = _transactioncode;
+		
+		WHILE @index < JSON_LENGTH(jsonData, '$.broadcastOffices') DO
+		SET @broadcastForwardedTo = getvalue(jsonData, CONCAT('$.broadcastOffices[',@index,'].forwardedTo'));
+		SET @sql = CONCAT('INSERT INTO documentitemdetails(trans_code,forwardedto,note,enteredby,entereddate) 
+											VALUES (''',_transactioncode,''',''',@broadcastForwardedTo,''',''-'',''',_officer,''',''',_dateadded,''')');
+		PREPARE stmt FROM @sql;
+		EXECUTE stmt;
+		DEALLOCATE PREPARE stmt;
+		SET @index = @index + 1;
+		END WHILE;
+	END IF;
+	
+	SET _statusmsg = "New document submitted";
+	SET _statusno = 1;
+	SELECT _statusmsg AS result, _statusno AS statuscode;
+	COMMIT;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for newdocument_copy1
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `newdocument_copy1`;
+delimiter ;;
+CREATE PROCEDURE `newdocument_copy1`(IN jsonData LONGTEXT)
+BEGIN
+	DECLARE _statusmsg VARCHAR(100);
+	DECLARE _statusno TINYINT;
+	
+	DECLARE _transactioncode VARCHAR(500) DEFAULT JSON_UNQUOTE(JSON_EXTRACT(jsonData, '$.transactionCode'));
+	DECLARE _officer CHAR(30) DEFAULT getvalue(jsonData, '$.actionOfficer');
+	DECLARE _docdesc LONGTEXT DEFAULT getvalue(jsonData, '$.documentDescription');
+	DECLARE _docpurpose LONGTEXT DEFAULT getvalue(jsonData, '$.documentPurpose');
+	DECLARE _communicationType LONGTEXT DEFAULT getvalue(jsonData, '$.communicationType');
+	DECLARE _officeinvolved VARCHAR(50) DEFAULT getvalue(jsonData, '$.officeInvolved');
+	DECLARE _forwardedto VARCHAR(50) DEFAULT getvalue(jsonData, '$.forwardedTo');
+	DECLARE _urgency VARCHAR(100) DEFAULT getvalue(jsonData, '$.urgencyLevel');
+	DECLARE _fileName VARCHAR(300) DEFAULT getvalue(jsonData, '$.filename');
+	DECLARE _dateadded DATETIME DEFAULT CURRENT_TIMESTAMP();
+	
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+		SET _statusmsg = "Database Error: Error inserting transaction.";
+		SET _statusno = 0;
+		SELECT _statusmsg AS result, _statusno AS statuscode;
+	END;
+	
+	START TRANSACTION;
+	SET @sql = CONCAT('INSERT INTO documentitem (transactioncode, officer, docdescription, docpurpose,
+											communicationType, officeinvolved, urgencylevel, dateadded, filename)
+											VALUES (''',_transactioncode,''',''',_officer,''',''',_docdesc,''',''',_docpurpose,''',
+											''',_communicationType,''',''',_officeinvolved,''',''',_urgency,''',''',_dateadded,''',
+											''',_fileName,''')');
 	PREPARE stmt FROM @sql;
 	EXECUTE stmt;
 	DEALLOCATE PREPARE stmt;
