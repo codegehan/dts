@@ -1,3 +1,5 @@
 .env
 files
 signatures
+library/compressiq
+compressedPDFFiles

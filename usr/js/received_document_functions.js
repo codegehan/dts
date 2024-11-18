@@ -19,7 +19,8 @@ function viewPDF(filename) {
     } else {
         // var filePath = '../files/';
         // window.open(filePath + filename, '_blank');
-        window.location.href="./viewPDF.php?fileName=" + filename;
+        // window.location.href="./viewPDF.php?fileName=" + filename;
+        window.open('viewPDF.php?filename=' + encodeURIComponent(filename), '_blank');
     }
 }
 $(document).ready(function() {

@@ -138,6 +138,19 @@ function SubmitNewDocument(){
 }
 
 function viewPDF(filename) {
+    // if(filename === "null") {
+    //     Swal.fire({
+    //         title: 'No file attached',
+    //         showConfirmButton: false,
+    //         timer: 1500,
+    //         icon: 'error'
+    //     });
+    // } else {
+    //     var filePath = '../files/';
+    //     window.open(filePath + filename, '_blank');
+    //     // window.location.href="./viewPDF.php?fileName=" + filename;
+    // }
+
     if(filename === "null") {
         Swal.fire({
             title: 'No file attached',
@@ -146,11 +159,10 @@ function viewPDF(filename) {
             icon: 'error'
         });
     } else {
-        var filePath = '../files/';
-        window.open(filePath + filename, '_blank');
-        // window.location.href="./viewPDF.php?fileName=" + filename;
-    }
+        window.open('viewPDF.php?filename=' + encodeURIComponent(filename), '_blank');
 }
+    }
+    
 
 let selectedValues = [];
 

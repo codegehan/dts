@@ -1,8 +1,12 @@
 <?php
+ini_set('display_errors', 0); // Disable error display
+// error_reporting(ERR_ALL);  // Suppress all error reporting
 class PDFSignature {
 private $documentName;
 private $documentPath;
 private $signaturePath;
+private $addSignatureDisplay = "";
+private $addSignatureColor = "";
 
 public function __construct($documentName, $documentPath, $signatureImage, $signedBy, $recordNo, $redirectURL) {
 $this->documentName = htmlspecialchars($documentName);
@@ -19,12 +23,20 @@ if (!file_exists($this->documentPath)) {
 }
 $fileContent = file_get_contents($this->documentPath);
 $signContent = file_get_contents($this->signatureImage);
+if (!$signContent) {
+    $this->addSignatureDisplay = "disabled"; // Set the button to disabled
+    $this->addSignatureColor = "grayBtn"; // Set the button to disabled
+} else {
+    $this->addSignatureDisplay = ""; // Set the button to disabled
+    $this->addSignatureColor = "blueBtn"; // Otherwise, keep it enabled
+}
 $docName = $this->documentName;
 $signaturedBy = $this->signedBy;
 $recNo = $this->recordNo;
 $urlRed = $this->redirect;
 $fileContentBase64 = base64_encode($fileContent);
 $signContentBase64 = base64_encode($signContent);
+
 echo <<<HTML
 <style>
 #pdfCanvas {
@@ -35,6 +47,9 @@ border: 1px solid #000;
 .bottom-btn{
 padding: 8px 16px;
 font-size: 2rem;
+border: none; /* Remove default border */
+border-radius: 5px; /* Rounded corners */
+color: rgb(255, 255, 255);
 }
 button:hover{
 cursor: pointer;
@@ -47,6 +62,84 @@ transform: translateX(-50%); /* Center horizontally */
 text-align: center; /* Center text inside buttons */
 margin: 10px auto; /* Add margin to top and bottom */
 }
+
+#otpContainer {
+width: 450px;
+height: 200px;
+background: linear-gradient(151deg, rgb(255, 172, 222) 0%, rgb(191, 191, 191) 100%);
+border: 1px solid #fff;
+border-radius: 10px; 
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+opacity: 0; /* Initially invisible */
+visibility: hidden;
+transition: all 0.5s ease-in-out; /* Smooth transition */
+z-index: 1000; /* Bring to the front */
+padding: 20px; /* Add padding for spacing */
+text-align: center; /* Center text */
+}
+
+.otpShow {
+    opacity: 1 !important; /* Make it visible */
+    visibility: visible !important;
+}
+
+.input-group {
+    margin: 20px 0; /* Space between input and buttons */
+}
+
+label {
+font-size: 1.5rem; /* Larger font size for the label */
+margin-bottom: 10px; /* Space below the label */
+}
+
+input[type="text"] {
+width: 100%; /* Full width input */
+padding: 10px; /* Padding for input */
+font-size: 1.5rem; /* Larger font size */
+border: 1px solid #ccc; /* Light border */
+border-radius: 5px; /* Rounded corners */
+box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Inner shadow */
+}
+
+.otpButton {
+font-size: 1.2rem; /* Adjust font size */
+padding: 10px 20px; /* Add padding for buttons */
+margin: 5px; /* Add margin between buttons */
+border: none; /* Remove default border */
+border-radius: 5px; /* Rounded corners */
+cursor: pointer; /* Pointer cursor */
+transition: background-color 0.3s; /* Smooth background change */
+color: rgb(255, 255, 255);
+
+}
+.greenBtn{
+    background: linear-gradient(182deg, rgb(5, 255, 72) 0%, rgb(71, 71, 71) 100%);
+}
+.blueBtn{
+    background: linear-gradient(182deg, rgb(0, 102, 204) 0%, rgb(71, 71, 71) 100%);
+}
+.redBtn{
+    background: linear-gradient(182deg, rgb(255, 73, 73) 0%, rgb(71, 71, 71) 100%);
+}
+.grayBtn{
+    background: linear-gradient(182deg, rgb(148, 148, 148) 0%, rgb(71, 71, 71) 100%);
+}
+.otpButton:hover {
+background-color: darkblue; /* Change background on hover */
+color: #fff; /* Change text color */
+}
+
+.cancelButton {
+background-color: #dc3545; /* Red background for cancel */
+}
+
+.cancelButton:hover {
+background-color: #c82333; /* Darker red on hover */
+}
 </style>
 <input type="file" id="pdfInput" accept="application/pdf" style="display:none;">
 <div style="text-align:center;margin-bottom:80px;">
@@ -58,13 +151,58 @@ margin: 10px auto; /* Add margin to top and bottom */
     <button id="nextPage" style="font-size:18px;">Next</button>
 </div>
 <div id="buttonCont-pdf" style="margin-top:10px;text-align:center;">
-    <button id="signButton" class="bottom-btn" style="background-color:blue;color:#fff;">Add Signature</button>
-    <button id="saveButton" class="bottom-btn" style="background-color:green;color:#fff;">Save PDF</button>
-    <button id="clearButton" class="bottom-btn" style="background-color:red;color:#fff;">Clear</button>
+    <button id="signButton" class="bottom-btn {$this->addSignatureColor}" {$this->addSignatureDisplay}>Add Signature</button>
+    <button id="saveButton" class="bottom-btn greenBtn" >Save PDF</button>
+    <button id="clearButton" class="bottom-btn redBtn" >Clear</button>
+    <button id="testSwal" class="bottom-btn redBtn">Show</button>
 </div>
+
+
+<div id="otpContainer">
+    <div class="input-group">
+        <input type="text" style="text-align:center;margin-top: 20px;" id="otpCode" placeholder="Enter your OTP">
+    </div>
+    <div>
+        <p id="messageOtp"></p>
+    </div>
+    <div>
+        <button class="otpButton blueBtn" id="sendOtp">Send OTP</button>
+        <button class="otpButton greenBtn" id="confirmOtp">Confirm</button>
+        <button class="otpButton redBtn" id="cancelOtpSend">Cancel</button>
+    </div>
+</div>
+
 <script src="../pdfSign/pdf-lib.min.js"></script>
 <script src="../pdfSign/pdf.min.js"></script>
 <script>
+
+var otpContainer = document.getElementById('otpContainer');
+var messageOtp = document.getElementById('messageOtp');
+
+document.getElementById('testSwal').addEventListener('click', function(){
+    otpContainer.classList.add('otpShow');
+
+});
+document.getElementById('cancelOtpSend').addEventListener('click', function(){
+    otpContainer.classList.remove('otpShow');
+});
+document.getElementById('sendOtp').addEventListener('click', function(){
+
+    messageOtp.innerText = "One time password (OTP) is sent to your email!";
+});
+document.getElementById('confirmOtp').addEventListener('click', function(){
+    var otpCode = document.getElementById('otpCode').value;
+    if (otpCode === "123456") {
+        messageOtp.innerText = "OTP is valid";
+        setTimeout(() => {
+            otpContainer.classList.remove('otpShow'); 
+        }, 2000);
+    } else {
+        messageOtp.innerText = "Incorrect OTP code";
+    }
+    
+});
+
 pdfjsLib.GlobalWorkerOptions.workerSrc = '../pdfSign/pdf.worker.min.js';
 const pdfInput = document.getElementById('pdfInput');
 const pdfCanvas = document.getElementById('pdfCanvas');
@@ -140,6 +278,7 @@ signButton.addEventListener('click', () => {
 });
 async function addSignature(event) {
     if (!pdfDoc) return false;
+
     const rect = pdfCanvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;  
@@ -166,6 +305,9 @@ async function addSignature(event) {
     }
     pdfCanvas.removeEventListener('click', addSignature);
     pdfCanvas.style.cursor = 'default';
+
+
+
 }
 saveButton.addEventListener('click', async () => {
     if (!pdfDoc) return false;
@@ -276,3 +418,5 @@ HTML;
      return true;
     }
 }
+
+?>

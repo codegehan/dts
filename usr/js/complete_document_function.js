@@ -13,8 +13,7 @@ function viewPDF(filename) {
             icon: 'error'
         });
     } else {
-        var filePath = '../files/';
-        window.open(filePath + filename, '_blank');
+        window.open('viewPDF.php?filename=' + encodeURIComponent(filename), '_blank');
     }
 }
 

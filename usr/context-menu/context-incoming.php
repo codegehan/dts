@@ -1,6 +1,10 @@
 <?php include('context-style.php');?>
 <div id="context-menu">
     <div class="item-context-menu">
+        <i class="fa-solid fa-eye"></i>
+        View
+    </div>
+    <div class="item-context-menu">
         <i class="fa-solid fa-thumbs-up"></i>
         Receive 
     </div>
@@ -67,6 +71,15 @@
                         });
                         Tools.InsertRecord('controller/inserting.php', 'document_incoming_validate', jsonData);
                         GetIncomingRequest();
+                    }
+                    if(action.toUpperCase() === "VIEW"){
+                        firstColumnData = rowDataElement.querySelector('td:first-child').innerText;
+                        // console.log("Viewing", firstColumnData);
+                        // var filePath = '../files/';
+                        // window.open(filePath + firstColumnData + '.pdf', '_blank');
+                        // $('#exampleModal').find('#t-code').val(firstColumnData);
+                        // $('#exampleModal').modal('show');
+                        window.open('viewPDF.php?filename=' + encodeURIComponent(firstColumnData), '_blank');
                     }
                     // if(action.toUpperCase() === "FOR EDIT"){
                     //     var jsonData = JSON.stringify({
