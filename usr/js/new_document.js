@@ -18,6 +18,21 @@ function ProposalAttachedFile(){
     document.getElementById('proposalAttachedFile').addEventListener('change', (event) => {
         selectedFile = event.target.files[0];
         if(selectedFile) {
+            // Check if file is PDF
+            if(selectedFile.type !== 'application/pdf') {
+                sweetAlert("Only PDF files are allowed", "error");
+                document.getElementById('proposalAttachedFile').value = '';
+                document.getElementById('fileNameLabel').innerHTML = '';
+                return;
+            }
+            
+            // Check if file size is greater than 5MB
+            if(selectedFile.size > 5 * 1024 * 1024) {
+                sweetAlert("File size must not exceed 5MB", "error");
+                document.getElementById('proposalAttachedFile').value = '';
+                document.getElementById('fileNameLabel').innerHTML = '';
+                return;
+            }
             document.getElementById('fileNameLabel').innerHTML = "<span class='text-dark'>File Attached: <span style='color:blue;'>" + selectedFile.name +"</span></span>";
         }
     });
@@ -79,23 +94,12 @@ function SubmitNewDocument(){
     var selectedFile = fileInput.files[0];
     // Check if no file is selected
     if (!selectedFile) {
-        Swal.fire({
-            title: "Please attach a PDF file",
-            showCancelButton: false,
-            confirmButtonText: "Ok",
-            icon: "error"
-        });
-
+        sweetAlert("Please attach a PDF file", "error");
         return;
     }
     // Optionally, check if the file is a PDF
     if (selectedFile.type !== 'application/pdf') {
-        Swal.fire({
-            title: "Only PDF files are allowed",
-            showCancelButton: false,
-            confirmButtonText: "Ok",
-            icon: "error"
-        });
+        sweetAlert("Only PDF files are allowed", "error");
         return;
     }
 

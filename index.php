@@ -35,8 +35,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPRDEgital</title>
+    <title>VPRDE DMS</title>
     <link rel="stylesheet" href="includes/lineicons/web-font-files/lineicons.css">
+    <link rel="stylesheet" href="includes/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="includes/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="includes/font/poppins.css">
     <link rel="icon" href="includes/img/vprde-logo.png" type="image/x-icon">
@@ -74,7 +75,7 @@
 <body>
     <nav class="navbar navbar-light bg-light w-100" style="position: fixed; background: linear-gradient(to right, #ff9966, #ff5e62);">
         <div class="ps-3 pt-2 d-flex">
-            <h5 style="font-size: 1.5rem; text-shadow: 2px 2px 4px #000000; color: #fff;">VPRDEgital Record Tracking and Archiving Management System</h5>
+            <h5 style="font-size: 1.5rem; text-shadow: 2px 2px 4px #000000; color: #fff;">VPRDE Document Management System</h5>
         </div>
     </nav>
     <div class="wrapper">
@@ -85,15 +86,18 @@
                     <h5 style="text-shadow: 2px 2px 4px #ccc;color:#000000">VPRDE Authorization</h5>
                 </div>
                 <div class="form-floating mb-2">
-                    <input type="email" class="form-control text-uppercase" placeholder="Enter email" id="email" name="email" autocomplete="off" required></input>
+                    <input type="email" class="form-control" placeholder="Enter email" id="email" name="email" autocomplete="off" required></input>
                     <label for="email" class="ms-2" style="font-size:12px;">Email</label>
                 </div>
-                <div class="form-floating mb-2">
+                <div class="form-floating mb-2 position-relative">
                     <input type="password" class="form-control" placeholder="Enter password" id="password" name="password" autocomplete="off" maxlength="12" required></input>
                     <label for="password" class="ms-2" style="font-size:12px;">Password</label>
+                    <button class="btn btn-link position-absolute top-50 end-0 translate-middle-y pe-3" type="button" onclick="togglePasswordVisibility()" style="border: none;">
+                        <i class="fa-regular fa-eye-slash" id="togglePassword"></i>
+                    </button>
                 </div>
                 <div class="text-center">
-                    <button type="submit" name="LoginUser" class="btn btn-sm px-3 mt-2 w-100" style="background: linear-gradient(to right, #ff9966, #ff5e62);">Login</button>
+                    <button type="submit" name="LoginUser" class="btn btn-sm px-3 mt-2 w-75" style="background: linear-gradient(to right, #ff9966, #ff5e62);">Login</button>
                 </div>
                 <div class="text-center mt-2">
                     <span style="font-size:10px;"><i>DON'T HAVE ACCOUNT YET? PLEASE CONTACT ADMINISTRATOR</i></span>
@@ -131,9 +135,25 @@
     }
 ?>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        ShowLoginContainer();
+    });
     function ShowLoginContainer(){
         var loginContainer = document.getElementById('loginContainer');
         loginContainer.classList.toggle('show-container');
+    }
+    function togglePasswordVisibility(){
+        var passwordInput = document.getElementById('password');
+        var icon = document.getElementById('togglePassword');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        }
     }
 </script>
 <script src="includes/jquery/jquery-min.js"></script>
