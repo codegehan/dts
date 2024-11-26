@@ -2,6 +2,11 @@
     include_once("db/conf.php"); 
     session_start();
     if(isset($_POST['LoginUser'])){
+        if(!isset($_POST['g-recaptcha-response']) || $_POST['g-recaptcha-response'] == null) {
+            $_SESSION['message'] = "";
+            $_SESSION['message_code'] = 'error';
+            return;
+        }
         $data = array(
             "email" => $_POST['email'],
             "password" => $_POST['password']
