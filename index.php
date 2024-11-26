@@ -3,7 +3,7 @@
     session_start();
     if(isset($_POST['LoginUser'])){
         if(!isset($_POST['g-recaptcha-response']) || $_POST['g-recaptcha-response'] == null) {
-            $_SESSION['message'] = "";
+            $_SESSION['message'] = "Robot man ka";
             $_SESSION['message_code'] = 'error';
             return;
         }
