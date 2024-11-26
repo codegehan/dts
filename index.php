@@ -102,7 +102,7 @@
                         <i class="fa-regular fa-eye-slash" id="togglePassword"></i>
                     </button>
                 </div>
-                <div id="google-recaptcha-checkbox"></div>
+                <div class="w-100" id="google-recaptcha-checkbox"></div>
                 <div class="text-center">
                     <button type="submit" name="LoginUser" class="btn btn-sm px-3 mt-2 w-75" style="background: linear-gradient(to right, #ff9966, #ff5e62);">Login</button>
                 </div>
