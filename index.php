@@ -96,6 +96,7 @@
                         <i class="fa-regular fa-eye-slash" id="togglePassword"></i>
                     </button>
                 </div>
+                <div id="google-recaptcha-checkbox"></div>
                 <div class="text-center">
                     <button type="submit" name="LoginUser" class="btn btn-sm px-3 mt-2 w-75" style="background: linear-gradient(to right, #ff9966, #ff5e62);">Login</button>
                 </div>
@@ -134,6 +135,16 @@
         unset($_SESSION['message_code']);
     }
 ?>
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+    async defer>
+</script>
+<script type="text/javascript">
+    var onloadCallback = function() {
+        grecaptcha.render('google-recaptcha-checkbox', {
+            'sitekey' : '6LcHVYoqAAAAAAOgq_-OQVzky3tXkA-7-pIGlAWR'
+        });
+    };
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         ShowLoginContainer();
@@ -155,6 +166,7 @@
             icon.classList.add('fa-eye-slash');
         }
     }
+
 </script>
 <script src="includes/jquery/jquery-min.js"></script>
 <script src="library/js/workers.js"></script>
