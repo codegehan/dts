@@ -5,33 +5,34 @@
         if(!isset($_POST['g-recaptcha-response']) || $_POST['g-recaptcha-response'] == null) {
             $_SESSION['message'] = "Robot man ka";
             $_SESSION['message_code'] = 'error';
-            return;
-        }
-        $data = array(
-            "email" => $_POST['email'],
-            "password" => $_POST['password']
-        );
-        $jsonData = json_encode($data);
-        $sql = "call login(?)";
-        $stmt = $con->prepare($sql);
-        $stmt->bind_param('s', $jsonData);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        
-        if($row['statuscode'] == 0){
-            $_SESSION['message'] = $row['result'];
-            $_SESSION['message_code'] = 'error';
-        } elseif($row['statuscode'] == 1){
-            $_SESSION['userdetails'] = $row['result'];
-            $user = json_decode($row['result']);
-            if($user->issecured == 0) {
-                header('Location: usr/password.php');
-            } else {
-                header('Location: usr/dashboard.php');
-            }
+        } else {
+            $data = array(
+                "email" => $_POST['email'],
+                "password" => $_POST['password']
+            );
+            $jsonData = json_encode($data);
+            $sql = "call login(?)";
+            $stmt = $con->prepare($sql);
+            $stmt->bind_param('s', $jsonData);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
             
+            if($row['statuscode'] == 0){
+                $_SESSION['message'] = $row['result'];
+                $_SESSION['message_code'] = 'error';
+            } elseif($row['statuscode'] == 1){
+                $_SESSION['userdetails'] = $row['result'];
+                $user = json_decode($row['result']);
+                if($user->issecured == 0) {
+                    header('Location: usr/password.php');
+                } else {
+                    header('Location: usr/dashboard.php');
+                }
+                
+            }
         }
+        
     }
 ?>
 <!DOCTYPE html>
